@@ -1,8 +1,22 @@
+from wsgiref.handlers import format_date_time
+from datetime import datetime
+from time import mktime
+
 from requests.auth import AuthBase
 
-from sign import Signer
+from .sign import Signer
+
 
 class HTTPSignatureAuth(AuthBase):
+    '''
+    Sign a request using the http-signature scheme.
+    https://github.com/joyent/node-http-signature/blob/master/http_signing.md
+    
+    key_id is the mandatory label indicating to the server which secret to use
+    secret is the filename of a pem file in the case of rsa, a password string in the case of an hmac algorithm
+    algorithm is one of the six specified algorithms
+    headers is a list of http headers to be included in the signing string, defaulting to "Date" alone.
+    '''
     def __init__(self, key_id='', secret='', algorithm='rsa-sha256', headers=None):
         self.signer = Signer(secret=secret, algorithm=algorithm)
         self.algorithm = algorithm
