@@ -17,6 +17,6 @@ devdatabase.db
 bundle_version.gen
 celeryd.log
 celeryd.pid
-joy-rsa
-joy-rsa.pub
+joy_rsa
+joy_rsa.pub
 
