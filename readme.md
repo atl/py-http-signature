@@ -44,4 +44,4 @@ for use with requests:
 
 ## License
 
-MIT, okay?
+MIT
