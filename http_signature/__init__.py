@@ -1,1 +1,1 @@
-from .sign import Signer
+from .sign import Signer, HeaderSigner
