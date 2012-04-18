@@ -1,10 +1,13 @@
 from setuptools import setup, find_packages
 
+with open('readme.rst') as file:
+    long_description = file.read()
+
 setup(
     name='http_signature',
-    version='0.1.1',
-    description="Simple secure signing for HTTP requests",
-    long_description="Simple secure signing for HTTP requests using the Joyent http-signature specification",
+    version='0.1.0',
+    description="Simple secure signing for HTTP requests using http-signature",
+    long_description=long_description,
     classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
@@ -17,6 +20,6 @@ setup(
     license='MIT',
     packages=find_packages(),
     include_package_data=True,
-    zip_safe=False,
+    zip_safe=True,
     install_requires=['setuptools','pycrypto'],
 )
