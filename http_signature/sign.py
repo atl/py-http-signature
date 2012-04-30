@@ -56,6 +56,13 @@ class Signer(object):
         hmac.update(sign_string)
         return hmac.digest()
     
+    def swap_keys(self):
+        if self._keys:
+            self._agent_key = self._keys[0]
+            self._keys = self._keys[1:]
+        else:
+            self._agent_key = None
+    
     def sign(self, sign_string):
         if self._agent_key:
             data = self.sign_agent(sign_string)
