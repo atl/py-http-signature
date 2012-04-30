@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
-with open('readme.rst') as file:
+with open('README.rst') as file:
     long_description = file.read()
 
 setup(
     name='http_signature',
-    version='0.1.0',
+    version='0.1.1',
     description="Simple secure signing for HTTP requests using http-signature",
     long_description=long_description,
     classifiers=[
@@ -26,5 +26,5 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=True,
-    install_requires=['pycrypto'],
+    install_requires=['pycrypto', 'ssh'],
 )

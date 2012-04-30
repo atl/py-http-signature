@@ -7,6 +7,7 @@ Requirements
 ------------
 
 * PyCrypto
+* ssh (for ssh-agent integration)
 
 Optional:
 
@@ -32,16 +33,17 @@ for use with requests::
     z = requests.get('https://api.joyentcloud.com/my/packages/Small+1GB', 
                              auth=auth, headers={'X-Api-Version': '~6.5'})
 
-class initialization parameters
+Class initialization parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-    http_signature.Signer(secret='', algorithm='rsa-sha256')
+    http_signature.Signer(secret='', algorithm='rsa-sha256', allow_agent=True)
 
 ``secret``, in the case of an rsa signature, is a path to a private RSA pem file. In the case of an hmac, it is a secret password.  
 ``algorithm`` is one of the six allowed signatures: ``rsa-sha1``, ``rsa-sha256``, ``rsa-sha512``, ``hmac-sha1``, ``hmac-sha256``, 
 ``hmac-sha512``.
+``allow_agent`` uses the ``ssh`` package to find an ``ssh-agent`` instance running, and uses that to sign all requests. Note that if so, this overrides manual selection of the signing algorithm to ``rsa-sha1``.
 
 ::
 
@@ -49,7 +51,7 @@ class initialization parameters
 
 ``key_id`` is the label by which the server system knows your RSA signature or password.  
 ``headers`` is the list of HTTP headers that are concatenated and used as signing objects. By default it is the specification's minimum, the ``Date`` HTTP header.  
-``secret`` and ``algorithm`` are as above.
+``secret``, ``algorithm``, and ``allow_agent`` are as above.
 
 License
 -------
