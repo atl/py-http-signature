@@ -8,13 +8,15 @@ from Crypto.Hash import SHA256, SHA, SHA512, HMAC
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 
+from .utils import sig
+
 ALGORITHMS = frozenset(['rsa-sha1', 'rsa-sha256', 'rsa-sha512', 'hmac-sha1', 'hmac-sha256', 'hmac-sha512'])
 HASHES = {'sha256': SHA256,
           'sha1':   SHA,
           'sha512': SHA512}
 
 class Signer(object):
-    def __init__(self, secret='', algorithm='rsa-sha256'):
+    def __init__(self, secret='', algorithm='rsa-sha256', allow_agent=True):
         assert algorithm in ALGORITHMS, "Unknown algorithm"
         self.sign_algorithm, self.hash_algorithm = algorithm.split('-')
         if self.sign_algorithm == 'rsa':
