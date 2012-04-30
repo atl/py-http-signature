@@ -10,4 +10,7 @@ def lkv(d):
     return parts
 
 def sig(d):
-    return lkv[1]
+    return lkv(d)[1]
+
+def is_rsa(keyobj):
+    return lkv(keyobj.blob)[0] == "ssh-rsa"
