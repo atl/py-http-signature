@@ -3,6 +3,7 @@ import base64
 from wsgiref.handlers import format_date_time
 from datetime import datetime
 from time import mktime
+from getpass import getpass
 
 from Crypto.Hash import SHA256, SHA, SHA512, HMAC
 from Crypto.PublicKey import RSA
@@ -21,6 +22,7 @@ class Signer(object):
     def __init__(self, secret='~/.ssh/id_rsa', algorithm='rsa-sha256', allow_agent=True):
         assert algorithm in ALGORITHMS, "Unknown algorithm"
         self._agent_key = False
+        self._rsa = False
         self.sign_algorithm, self.hash_algorithm = algorithm.split('-')
         if allow_agent:
             keys = ssh.Agent().get_keys()
@@ -29,14 +31,18 @@ class Signer(object):
                 self._agent_key = self._keys[0] 
                 self._keys = self._keys[1:]
                 self.sign_algorithm, self.hash_algorithm = ('rsa', 'sha1')
-        if self.sign_algorithm == 'rsa':
+        if not self._agent_key and self.sign_algorithm == 'rsa':
             with open(expanduser(secret)) as fh:
-                rsa_key = RSA.importKey(fh.read())
+                k = fh.read()
+            try:
+                rsa_key = RSA.importKey(k)
+            except ValueError:
+                pw = getpass('RSA SSH Key Password: ')
+                rsa_key = RSA.importKey(k, pw)
             self._rsa = PKCS1_v1_5.new(rsa_key)
             self._hash = HASHES[self.hash_algorithm]
         elif self.sign_algorithm == 'hmac':
             self._hash = HMAC.new(secret, digestmod=HASHES[self.hash_algorithm])
-            self._rsa = False
     
     @property
     def algorithm(self):
@@ -64,12 +70,15 @@ class Signer(object):
             self._agent_key = None
     
     def sign(self, sign_string):
+        data = None
         if self._agent_key:
             data = self.sign_agent(sign_string)
         elif self._rsa:
             data = self.sign_rsa(sign_string)
-        else:
+        elif self._hash:
             data = self.sign_hmac(sign_string)
+        if not data:
+            raise SystemError('No valid encryption: try allow_agent=False ?')
         return base64.b64encode(data)
     
 
