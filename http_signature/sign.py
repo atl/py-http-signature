@@ -19,10 +19,11 @@ HASHES = {'sha256': SHA256,
           'sha512': SHA512}
 
 class Signer(object):
-    def __init__(self, secret='~/.ssh/id_rsa', algorithm='rsa-sha256', allow_agent=True):
+    def __init__(self, secret='~/.ssh/id_rsa', algorithm='rsa-sha256', allow_agent=False):
         assert algorithm in ALGORITHMS, "Unknown algorithm"
         self._agent_key = False
         self._rsa = False
+        self._hash = None
         self.sign_algorithm, self.hash_algorithm = algorithm.split('-')
         if allow_agent:
             keys = ssh.Agent().get_keys()
@@ -93,7 +94,7 @@ class HeaderSigner(object):
     headers is a list of http headers to be included in the signing string, defaulting to "Date" alone.
     '''
     def __init__(self, key_id='~/.ssh/id_rsa', secret='', algorithm='rsa-sha256',
-            headers=None, allow_agent=True):
+            headers=None, allow_agent=False):
         self.signer = Signer(secret=secret, algorithm=algorithm, allow_agent=allow_agent)
         self.key_id = key_id
         self.headers = headers

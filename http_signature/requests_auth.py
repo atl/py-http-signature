@@ -17,7 +17,7 @@ class HTTPSignatureAuth(AuthBase):
     algorithm is one of the six specified algorithms
     headers is a list of http headers to be included in the signing string, defaulting to "Date" alone.
     '''
-    def __init__(self, key_id='', secret='', algorithm='rsa-sha256', headers=None, allow_agent=True):
+    def __init__(self, key_id='', secret='', algorithm='rsa-sha256', headers=None, allow_agent=False):
         self.signer = Signer(secret=secret, algorithm=algorithm, allow_agent=allow_agent)
         self.key_id = key_id
         self.headers = headers

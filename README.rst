@@ -38,7 +38,7 @@ Class initialization parameters
 
 ::
 
-    http_signature.Signer(secret='', algorithm='rsa-sha256', allow_agent=True)
+    http_signature.Signer(secret='', algorithm='rsa-sha256', allow_agent=False)
 
 ``secret``, in the case of an rsa signature, is a path to a private RSA pem file. In the case of an hmac, it is a secret password.  
 ``algorithm`` is one of the six allowed signatures: ``rsa-sha1``, ``rsa-sha256``, ``rsa-sha512``, ``hmac-sha1``, ``hmac-sha256``, 
