@@ -7,10 +7,10 @@ Requirements
 ------------
 
 * PyCrypto
-* ssh (for ssh-agent integration)
 
 Optional:
 
+* ssh (for ssh-agent integration)
 * requests
 
 Usage

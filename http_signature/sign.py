@@ -9,8 +9,6 @@ from Crypto.Hash import SHA256, SHA, SHA512, HMAC
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 
-import ssh
-
 from .utils import sig, is_rsa
 
 ALGORITHMS = frozenset(['rsa-sha1', 'rsa-sha256', 'rsa-sha512', 'hmac-sha1', 'hmac-sha256', 'hmac-sha512'])
@@ -26,6 +24,7 @@ class Signer(object):
         self._hash = None
         self.sign_algorithm, self.hash_algorithm = algorithm.split('-')
         if allow_agent:
+            import ssh
             keys = ssh.Agent().get_keys()
             self._keys = filter(is_rsa, keys)
             if self._keys:
@@ -93,7 +92,7 @@ class HeaderSigner(object):
     algorithm is one of the six specified algorithms
     headers is a list of http headers to be included in the signing string, defaulting to "Date" alone.
     '''
-    def __init__(self, key_id='~/.ssh/id_rsa', secret='', algorithm='rsa-sha256',
+    def __init__(self, key_id='~/.ssh/id_rsa', secret='~/.ssh/id_rsa', algorithm='rsa-sha256',
             headers=None, allow_agent=False):
         self.signer = Signer(secret=secret, algorithm=algorithm, allow_agent=allow_agent)
         self.key_id = key_id
