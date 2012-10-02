@@ -92,7 +92,7 @@ class HeaderSigner(object):
     algorithm is one of the six specified algorithms
     headers is a list of http headers to be included in the signing string, defaulting to "Date" alone.
     '''
-    def __init__(self, key_id='~/.ssh/id_rsa', secret='~/.ssh/id_rsa', algorithm='rsa-sha256',
+    def __init__(self, key_id='', secret='~/.ssh/id_rsa', algorithm='rsa-sha256',
             headers=None, allow_agent=False):
         self.signer = Signer(secret=secret, algorithm=algorithm, allow_agent=allow_agent)
         self.key_id = key_id

@@ -47,7 +47,7 @@ Class initialization parameters
 
 ::
 
-    http_signature.requests_auth.HTTPSignatureAuth(key_id='', secret='', algorithm='rsa-sha256', headers=None)
+    http_signature.requests_auth.HTTPSignatureAuth(key_id='', secret='', algorithm='rsa-sha256', headers=None, allow_agent=False)
 
 ``key_id`` is the label by which the server system knows your RSA signature or password.  
 ``headers`` is the list of HTTP headers that are concatenated and used as signing objects. By default it is the specification's minimum, the ``Date`` HTTP header.  
