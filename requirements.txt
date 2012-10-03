@@ -1,1 +1,2 @@
 PyCrypto
+# ssh or paramiko>=1.8.0 if ssh-agent desired

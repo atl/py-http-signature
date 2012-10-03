@@ -1,6 +1,11 @@
 Changes
 -------
 
+0.1.4 ()
+~~~~~~~~~~~~~~~~~~
+
+* Account for ssh now being re-merged into paramiko: either package is acceptable (but paramiko should ideally be >= 1.8.0)
+
 0.1.3 (2012-10-02)
 ~~~~~~~~~~~~~~~~~~
 

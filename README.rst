@@ -10,7 +10,7 @@ Requirements
 
 Optional:
 
-* ssh (for ssh-agent integration)
+* ssh or paramiko >= 1.8.0 (for ssh-agent integration)
 * requests
 
 Usage

@@ -24,7 +24,10 @@ class Signer(object):
         self._hash = None
         self.sign_algorithm, self.hash_algorithm = algorithm.split('-')
         if allow_agent:
-            import ssh
+            try:
+                import paramiko as ssh
+            except ImportError:
+                import ssh
             keys = ssh.Agent().get_keys()
             self._keys = filter(is_rsa, keys)
             if self._keys:
